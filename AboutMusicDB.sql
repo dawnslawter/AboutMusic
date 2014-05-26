@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 20, 2014 at 04:11 AM
+-- Generation Time: May 26, 2014 at 08:46 AM
 -- Server version: 5.5.27-log
 -- PHP Version: 5.4.6
 
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `aboutmusic`
 --
-CREATE DATABASE `aboutmusic` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `aboutmusic`;
 
 -- --------------------------------------------------------
 
@@ -65,7 +63,8 @@ CREATE TABLE IF NOT EXISTS `login` (
 --
 
 INSERT INTO `login` (`UserName`, `Password`, `Role`) VALUES
-('admin01', 'Ø]"š8®''ß±¨ÑÚt', 'admin');
+('admin01', 'Ø]"š8®''ß±¨ÑÚt', 'admin'),
+('member01', 'nvO‚—-©jüSŽ', 'member');
 
 -- --------------------------------------------------------
 
@@ -84,6 +83,13 @@ CREATE TABLE IF NOT EXISTS `member_data` (
   `Address2` varchar(99) NOT NULL,
   `Address3` varchar(99) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Member Particulars';
+
+--
+-- Dumping data for table `member_data`
+--
+
+INSERT INTO `member_data` (`UserName`, `Firstname`, `Lastname`, `MobileNo`, `TelNo`, `Email`, `Address1`, `Address2`, `Address3`) VALUES
+('member01', 'Jun Wei', 'Soh', 12345678, 87654321, 'junwei@gmail.com', 'CCK Ave 7', 'Blk 489 #99-08', 'S(680489)');
 
 -- --------------------------------------------------------
 
@@ -130,7 +136,7 @@ CREATE TABLE IF NOT EXISTS `staff_data` (
 --
 
 INSERT INTO `staff_data` (`staff_id`, `first_name`, `last_name`, `mobile_no`, `email`) VALUES
-('admin01', 'Jeryl', 'Teo', 96968095, '0');
+('admin01', 'Jeryl', 'Teo', 96968095, 'ffantasyviiclouds@hotmail.com');
 
 -- --------------------------------------------------------
 

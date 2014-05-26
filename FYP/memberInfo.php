@@ -5,7 +5,7 @@ and open the template in the editor.
 <!DOCTYPE html>
 <?php
 // require the checkLoginStatus.php file
-require 'checkStfLogin.php';
+require 'checkLogin.php';
 
 ?>
 
@@ -16,11 +16,11 @@ require 'checkStfLogin.php';
     </head>
     <body>
         <?php
-            include "staffNav.php"
+            include "Navigation.php"
         ?>
         <?php
         // put your code here
-        echo "Hi staff works";
+        echo "Hi member works";
         ?>
     </body>
 </html>

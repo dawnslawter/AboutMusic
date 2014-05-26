@@ -24,56 +24,38 @@ if (!(mysqli_connect_errno($con))) { // connection to database is successful
 
     $role = mysqli_query($con, $sqlQueryStr1); // execute the SQL query
 
-    $link='';
+
 
     if ($row1 = mysqli_fetch_array($role)) { // fetch the record
         $user = $row1;
-        if($user['Role'] == 'admin'){
-            $sqlQueryStr2 =
-            "SELECT * " .
-            "FROM staff_data SD, login L " .
-            "WHERE  " .
-            "staff_id = '$loginid' AND " .
-            "SD.staff_id = L.UserName";
-            
-            
-            
-            $result = mysqli_query($con, $sqlQueryStr2); // execute the SQL query
-           
-            if($row2 = mysqli_fetch_array($result)){
-                $_SESSION['userinfo'] = $row2; // put the record into the session
-                header('Location: staffInfo.php'); // redirect to the homepage.
-            }
-        }
-        if($user['Role'] == 'staff'){
-            $sqlQueryStr2 =
-            "SELECT * " .
-            "FROM staff_data SD, login L " .
-            "WHERE  " .
-            "staff_id = '$loginid' AND " .
-            "SD.staff_id = L.UserName";
-            
-            
-            
-            $result = mysqli_query($con, $sqlQueryStr2); // execute the SQL query
-           
-            if($row2 = mysqli_fetch_array($result)){
-                $_SESSION['userinfo'] = $row2; // put the record into the session
-                header('Location: staffInfo.php'); // redirect to the homepage.
-            }
-        }
         if($user['Role'] == 'member'){
             $sqlQueryStr2 =
             "SELECT * " .
             "FROM member_data " .
+            "WHERE " .
+            "UserName = '$loginid'";
+            
+            
+            $result = mysqli_query($con, $sqlQueryStr2); // execute the SQL query
+           
+            if($row3 = mysqli_fetch_array($result)){
+                $_SESSION['memberinfo'] = $row3; // put the record into the session
+                header('Location: memberInfo.php'); // redirect to the homepage.
+            }
+        }
+        else {
+            $sqlQueryStr2 =
+            "SELECT * " .
+            "FROM staff_data SD, login L " .
             "WHERE  " .
-            "member_id = '$loginid'";
-
+            "staff_id = '$loginid' AND " .
+            "SD.staff_id = L.UserName";
+            
             $result = mysqli_query($con, $sqlQueryStr2); // execute the SQL query
            
             if($row2 = mysqli_fetch_array($result)){
-                $_SESSION['memberinfo'] = $row2; // put the record into the session
-                header('Location: memberInfo.php'); // redirect to the homepage.
+                $_SESSION['userinfo'] = $row2; // put the record into the session
+                header('Location: staffInfo.php'); // redirect to the homepage.
             }
         }
     } 
