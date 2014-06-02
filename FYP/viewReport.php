@@ -20,17 +20,19 @@ require 'checkLogin.php';
         ?>
         <?php
         // put your code here
+        $student = isset($_GET['student']) ? $_GET['student'] : 1;
+        
         echo "Report is working!!";
         $loginid = $SESSION['memberinfo']['Username'];
         
         echo $loginid;
-        /*
+        
          $sqlQuery = 
             "SELECT  " .
             "FROM child " .
             "WHERE " .
-            "UserName = '$loginid'";
-         */
+            "UserName = '$student'";
+         
         
         ?>
     </body>

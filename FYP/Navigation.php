@@ -23,7 +23,7 @@
         
          if($checkchild == 0){
              $student = $memberinfo['UserName'];
-             echo '<a href="viewReport?student=$student.php">';
+             echo "<a href='viewReport?student=$student.php'>";
          }
         
          else{
