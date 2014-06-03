@@ -14,11 +14,11 @@
 
             <div class="grid_7"id="navigation">
 
-        [<a href="staffInfo.php">Your Particulars</a>] 
-        [<a href="addData.php">Register New Data</a>]
-        [<a href="checkData.php">View Staff</a>]
-        [<a href="checkData.php">View Students</a>]  
-        [<a href="handleLogout.php">Logout</a>] 
+        [ <a href="staffInfo.php">Your Particulars</a> ] 
+        [ <a href="addData.php">Register New Data</a> ]
+        [ <a href="checkData.php">View Existing Data</a> ]
+        [ <a href="schedLesson.php">Schedule Lesson</a> ]
+        [ <a href="handleLogout.php">Logout</a> ] 
         </p>
         </nav>
         <br /><br />';
@@ -30,10 +30,10 @@
 
             <div class="grid_7"id="navigation">
 
-        [<a href="staffInfo.php">Your Particulars</a>] 
-        [<a href="addData.php">Take Attendance</a>]
-        [<a href="checkData.php">Courses Teaching</a>]  
-        [<a href="handleLogout.php">Logout</a>] 
+        [ <a href="staffInfo.php">Your Particulars</a> ] 
+        [ <a href="addData.php">Take Attendance</a> ]
+        [ <a href="checkData.php">Courses Teaching</a> ]  
+        [ <a href="handleLogout.php">Logout</a> ] 
         </p>
         </nav>
         <br /><br />';

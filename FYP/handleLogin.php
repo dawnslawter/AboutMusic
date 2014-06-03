@@ -33,7 +33,7 @@ if (!(mysqli_connect_errno($con))) { // connection to database is successful
             "SELECT * " .
             "FROM member_data " .
             "WHERE " .
-            "UserName = '$loginid'";
+            "Member_ID = '$loginid'";
             
             
             $result = mysqli_query($con, $sqlQueryStr2); // execute the SQL query
@@ -61,7 +61,7 @@ if (!(mysqli_connect_errno($con))) { // connection to database is successful
     } 
     else {
         echo "Wrong Password or Non-existing User";
-        //header('refresh: 2; index.php'); // redirect to the login page.
+        header('refresh: 2; index.php'); // redirect to the login page.
     }
     mysqli_close($con); // close database connection
 } else {

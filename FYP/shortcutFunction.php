@@ -7,7 +7,7 @@
 date_default_timezone_set('Asia/Singapore');
 function getConnection() {
     // get a database connect to studentacad database
-    $con = mysqli_connect("localhost:8080", "abtMusic01", "abtMusic01", "aboutmusic");
+    $con = mysqli_connect("localhost:3306", "abtMusic01", "abtMusic01", "aboutmusic");
     return $con;
     
 }

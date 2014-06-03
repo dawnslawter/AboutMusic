@@ -20,18 +20,34 @@ require 'checkLogin.php';
         ?>
         <?php
         // put your code here
-        echo "Child is working";
-        $loginid = $SESSION['memberinfo']['Username'];
         
-        echo $loginid;
-        /*
-         $sqlQuery = 
-            "SELECT  " .
+        
+        $loginid = $_SESSION['memberinfo']['Member_ID'];
+        $con= getConnection();
+
+            if (mysqli_connect_errno($con)) {
+                echo "Failed to connect to MySQL: " . mysqli_connect_error();
+            } else {                
+                
+                 $sqlQuery = 
+            "SELECT * " .
             "FROM child " .
             "WHERE " .
-            "UserName = '$loginid'";
-         */
-        
+            "Member_ID = '$loginid'";
+            
+              $result = mysqli_query($con, $sqlQuery);
+              echo '<table>';
+              
+              while ($row = mysqli_fetch_array($result)) { // fetch the record
+                            $student = $_SESSION['memberinfo']['Member_ID'] . $row['Child_ID'];
+                            echo "<tr>
+                                <td>$row[First_Name] $row[Last_Name] </td>
+                                <td><a href='viewReport.php?student=$student.php'>View Progress</a>
+                                    </tr>
+                                ";
+                        }
+                        echo'<table/>';
+            }
         ?>
     </body>
 </html>

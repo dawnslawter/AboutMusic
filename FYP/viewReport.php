@@ -23,15 +23,13 @@ require 'checkLogin.php';
         $student = isset($_GET['student']) ? $_GET['student'] : 1;
         
         echo "Report is working!!";
-        $loginid = $SESSION['memberinfo']['Username'];
-        
-        echo $loginid;
+        $loginid = $_SESSION['memberinfo']['Member_ID'];
         
          $sqlQuery = 
             "SELECT  " .
             "FROM child " .
             "WHERE " .
-            "UserName = '$student'";
+            "Member_ID = '$student'";
          
         
         ?>
