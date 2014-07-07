@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 30, 2014 at 11:03 AM
+-- Generation Time: Jul 07, 2014 at 05:10 AM
 -- Server version: 5.5.27-log
 -- PHP Version: 5.4.6
 
@@ -124,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `child` (
   `Last_Name` text NOT NULL,
   PRIMARY KEY (`PC_ID`),
   KEY `fk_child` (`Member_ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `child`
@@ -136,7 +136,9 @@ INSERT INTO `child` (`PC_ID`, `Member_ID`, `Child_ID`, `First_Name`, `Last_Name`
 (3, 7, 1, 'Alvis', 'Ang'),
 (4, 7, 2, 'Darren', 'Ang'),
 (5, 22, 1, 'Chee Seong', 'Tan'),
-(6, 6, 3, 'Lina', 'Soh');
+(6, 6, 3, 'Lina', 'Soh'),
+(7, 24, 1, 'Rupert', 'Tan'),
+(8, 24, 2, 'Justin', 'Tan');
 
 -- --------------------------------------------------------
 
@@ -152,15 +154,20 @@ CREATE TABLE IF NOT EXISTS `course` (
   `Course_Description` text NOT NULL,
   PRIMARY KEY (`Course_ID`),
   KEY `fk_type` (`Course_Type`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `course`
 --
 
 INSERT INTO `course` (`Course_ID`, `Course_Name`, `Course_Type`, `Course_Description`) VALUES
-(1, 'Piano(Teen)', 1, 'Teen Piano'),
-(2, 'Guitar(Teen)', 2, 'Guitar for Teens');
+(1, 'Children Piano', 1, 'Learning to play a musical instrument requires complex co-ordination and helps to develop a multitude of intelligence. Research has shown that learning music early has a lasting impact on brain development.\r\nGive your child a quality music education; bring out the best through uncovering his/ her musical potential!'),
+(2, 'Guitar', 2, 'The guitar is a lyrical and versatile instrument. You can play solo, or accompanying someone. You can write parts for different voices, and play them all at once. It is portable, so you can bring it along everywhere you go.\r\nYou make direct contact with the source of the sound - the strings. Few instruments give you that kind of intimacy as the guitar. And it is a great tool for composition!'),
+(3, 'Classical Piano', 1, 'Learning piano helps to develop a multitude of intelligence. A versatile instrument, the piano is also the gateway to learn musicianship, arrangement, improvisation and composition.\r\nWhile technically demanding, learning to play the classical piano can be both fun and rewarding.'),
+(4, 'Pop Piano', 1, 'Ever wanted to master the piano but don''t know how?\r\nDo you think it is too difficult to learn and don''t know where to start?\r\nAs challenging as it may seem, you will master the instrument in no time. Our dedicated teachers are committed to deliver results in your playing.\r\nLearn to play the piano the fun and pop way. Swing to the melodies of your heart. No matter what your level or skills, playing the piano is both achievable and enjoyable.'),
+(5, 'Drums', 3, 'Ask anyone and they''ll agree that drumming is fun and cool. It energises you and relieves stress, leaving you upbeat for the rest of the week.\r\nFeel the rhythm under your fingertips as you drum away to your favourite songs!'),
+(6, 'Junior Drums', 3, 'Drumming is cool and fun! Ever thought of being the drummer and form your own band?\r\nDrum away to your favourite songs while feel the rhythm under your fingertips.'),
+(7, 'Ear Training', 4, 'If there is ONE common trait among all musicians, it must be a pair of trained ears!\r\nEar training is the cornerstone of every musician. Not acquiring the musician''s ears is like painting blindly.');
 
 -- --------------------------------------------------------
 
@@ -220,6 +227,30 @@ INSERT INTO `login` (`id`, `username`, `password`, `role`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `newsletter`
+--
+
+DROP TABLE IF EXISTS `newsletter`;
+CREATE TABLE IF NOT EXISTS `newsletter` (
+  `Img_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Img_Name` varchar(255) NOT NULL,
+  `Image` varchar(255) NOT NULL,
+  `Date_Uploaded` datetime NOT NULL,
+  PRIMARY KEY (`Img_ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+
+--
+-- Dumping data for table `newsletter`
+--
+
+INSERT INTO `newsletter` (`Img_ID`, `Img_Name`, `Image`, `Date_Uploaded`) VALUES
+(5, 'trial', '4001-AY1213s2_EST_Schedule_24Jan13.pdf', '0000-00-00 00:00:00'),
+(6, 'trial test 2', '5050-20200170.pdf', '0000-00-00 00:00:00'),
+(8, 'Trial 3', '5137-AY1213s2_EST_Schedule_24Jan13.pdf', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `price`
 --
 
@@ -229,21 +260,6 @@ CREATE TABLE IF NOT EXISTS `price` (
   `weekday_price` int(11) NOT NULL,
   `weekend_price` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Price to Course';
-
--- --------------------------------------------------------
-
---
--- Table structure for table `registration`
---
-
-DROP TABLE IF EXISTS `registration`;
-CREATE TABLE IF NOT EXISTS `registration` (
-  `course_id` int(11) NOT NULL,
-  `student_id` int(11) NOT NULL,
-  `start_date` int(11) NOT NULL,
-  `end_date` int(11) NOT NULL,
-  `payment_done` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Student to Course';
 
 -- --------------------------------------------------------
 
@@ -267,6 +283,33 @@ INSERT INTO `roles` (`id`, `description`) VALUES
 (2, 'member'),
 (3, 'staff'),
 (4, 'special staff');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `student`
+--
+
+DROP TABLE IF EXISTS `student`;
+CREATE TABLE IF NOT EXISTS `student` (
+  `Student_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Member_ID` int(11) NOT NULL,
+  `Child_ID` int(11) NOT NULL,
+  PRIMARY KEY (`Student_ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+--
+-- Dumping data for table `student`
+--
+
+INSERT INTO `student` (`Student_ID`, `Member_ID`, `Child_ID`) VALUES
+(1, 23, 0),
+(2, 6, 1),
+(3, 6, 2),
+(4, 6, 3),
+(5, 22, 0),
+(6, 22, 1),
+(7, 24, 1);
 
 -- --------------------------------------------------------
 
@@ -337,16 +380,17 @@ CREATE TABLE IF NOT EXISTS `timetable` (
   KEY `fk_timetablestudio` (`Venue`),
   KEY `fk_timetablecourse` (`Course_ID`),
   KEY `fk_timetablelogin` (`Staff_ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `timetable`
 --
 
 INSERT INTO `timetable` (`Lesson_ID`, `Staff_ID`, `Course_ID`, `Venue`, `Duration`, `Date_Scheduled`, `Time_Scheduled`) VALUES
-(1, 25, 1, 1, 1, '2014-06-24', '11:50:00'),
-(2, 25, 1, 2, 2, '2014-06-24', '13:50:00'),
-(3, 25, 1, 3, 1, '2014-06-26', '11:50:00');
+(1, 25, 1, 1, 1, '2014-07-24', '11:50:00'),
+(2, 25, 1, 2, 2, '2014-07-21', '13:50:00'),
+(3, 25, 1, 3, 1, '2014-07-26', '11:50:00'),
+(4, 25, 1, 2, 1, '2014-07-22', '11:50:00');
 
 -- --------------------------------------------------------
 
