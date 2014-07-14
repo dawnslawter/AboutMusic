@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 07, 2014 at 05:10 AM
+-- Generation Time: Jul 14, 2014 at 08:42 AM
 -- Server version: 5.5.27-log
 -- PHP Version: 5.4.6
 
@@ -19,6 +19,38 @@ SET time_zone = "+00:00";
 --
 -- Database: `aboutmusic`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `attendance`
+--
+
+DROP TABLE IF EXISTS `attendance`;
+CREATE TABLE IF NOT EXISTS `attendance` (
+  `Attendance_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Lesson_ID` int(11) NOT NULL,
+  `Student_ID` int(11) NOT NULL,
+  `Student_Presence` int(11) NOT NULL,
+  `Notice` int(11) NOT NULL,
+  `Staff_Presence` int(11) NOT NULL,
+  `Reschedule` int(11) NOT NULL,
+  `Feedback` text NOT NULL,
+  `Remarks` text NOT NULL,
+  PRIMARY KEY (`Attendance_ID`),
+  KEY `fk_attendstudent` (`Student_ID`),
+  KEY `fk_attendlesson` (`Lesson_ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `attendance`
+--
+
+INSERT INTO `attendance` (`Attendance_ID`, `Lesson_ID`, `Student_ID`, `Student_Presence`, `Notice`, `Staff_Presence`, `Reschedule`, `Feedback`, `Remarks`) VALUES
+(1, 3, 3, 0, 0, 0, 0, '', ''),
+(2, 3, 2, 0, 0, 0, 0, '', ''),
+(3, 1, 2, 0, 0, 1, 0, '', ''),
+(4, 1, 3, 0, 0, 0, 0, '', '');
 
 -- --------------------------------------------------------
 
@@ -235,18 +267,20 @@ CREATE TABLE IF NOT EXISTS `newsletter` (
   `Img_ID` int(11) NOT NULL AUTO_INCREMENT,
   `Img_Name` varchar(255) NOT NULL,
   `Image` varchar(255) NOT NULL,
+  `Date_Updated` datetime NOT NULL,
   `Date_Uploaded` datetime NOT NULL,
   PRIMARY KEY (`Img_ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `newsletter`
 --
 
-INSERT INTO `newsletter` (`Img_ID`, `Img_Name`, `Image`, `Date_Uploaded`) VALUES
-(5, 'trial', '4001-AY1213s2_EST_Schedule_24Jan13.pdf', '0000-00-00 00:00:00'),
-(6, 'trial test 2', '5050-20200170.pdf', '0000-00-00 00:00:00'),
-(8, 'Trial 3', '5137-AY1213s2_EST_Schedule_24Jan13.pdf', '0000-00-00 00:00:00');
+INSERT INTO `newsletter` (`Img_ID`, `Img_Name`, `Image`, `Date_Updated`, `Date_Uploaded`) VALUES
+(5, 'trial', '4001-AY1213s2_EST_Schedule_24Jan13.pdf', '2014-05-07 06:17:51', '2014-05-07 06:17:51'),
+(6, 'trial test 2', '5050-20200170.pdf', '2014-06-07 06:17:51', '2014-06-07 06:17:51'),
+(8, 'Trial 3', '5137-AY1213s2_EST_Schedule_24Jan13.pdf', '2014-07-01 06:17:51', '2014-07-01 06:17:51'),
+(9, 'Trial4', '5184-MS0229_MS2229_1213S1_Exam.pdf', '2014-07-08 03:54:00', '2014-07-07 06:17:51');
 
 -- --------------------------------------------------------
 
@@ -260,6 +294,28 @@ CREATE TABLE IF NOT EXISTS `price` (
   `weekday_price` int(11) NOT NULL,
   `weekend_price` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Price to Course';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `registration`
+--
+
+DROP TABLE IF EXISTS `registration`;
+CREATE TABLE IF NOT EXISTS `registration` (
+  `R_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Student_ID` int(11) NOT NULL,
+  `Course_ID` int(11) NOT NULL,
+  PRIMARY KEY (`R_ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `registration`
+--
+
+INSERT INTO `registration` (`R_ID`, `Student_ID`, `Course_ID`) VALUES
+(1, 2, 1),
+(2, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -387,10 +443,10 @@ CREATE TABLE IF NOT EXISTS `timetable` (
 --
 
 INSERT INTO `timetable` (`Lesson_ID`, `Staff_ID`, `Course_ID`, `Venue`, `Duration`, `Date_Scheduled`, `Time_Scheduled`) VALUES
-(1, 25, 1, 1, 1, '2014-07-24', '11:50:00'),
-(2, 25, 1, 2, 2, '2014-07-21', '13:50:00'),
-(3, 25, 1, 3, 1, '2014-07-26', '11:50:00'),
-(4, 25, 1, 2, 1, '2014-07-22', '11:50:00');
+(1, 25, 1, 1, 1, '2014-07-14', '11:50:00'),
+(2, 25, 1, 2, 2, '2014-07-26', '13:50:00'),
+(3, 25, 1, 3, 1, '2014-07-14', '11:50:00'),
+(4, 25, 1, 2, 1, '2014-07-09', '11:50:00');
 
 -- --------------------------------------------------------
 
@@ -429,6 +485,13 @@ INSERT INTO `user_data` (`User_ID`, `First_Name`, `Last_Name`, `MobileNo`, `TelN
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `attendance`
+--
+ALTER TABLE `attendance`
+  ADD CONSTRAINT `fk_attendlesson` FOREIGN KEY (`Lesson_ID`) REFERENCES `timetable` (`Lesson_ID`),
+  ADD CONSTRAINT `fk_attendstudent` FOREIGN KEY (`Student_ID`) REFERENCES `student` (`Student_ID`);
 
 --
 -- Constraints for table `authassignment`
