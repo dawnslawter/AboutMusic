@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 14, 2014 at 08:42 AM
+-- Generation Time: Aug 02, 2014 at 04:21 PM
 -- Server version: 5.5.27-log
 -- PHP Version: 5.4.6
 
@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `aboutmusic`
 --
+CREATE DATABASE `aboutmusic` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `aboutmusic`;
 
 -- --------------------------------------------------------
 
@@ -26,31 +28,31 @@ SET time_zone = "+00:00";
 -- Table structure for table `attendance`
 --
 
-DROP TABLE IF EXISTS `attendance`;
 CREATE TABLE IF NOT EXISTS `attendance` (
   `Attendance_ID` int(11) NOT NULL AUTO_INCREMENT,
   `Lesson_ID` int(11) NOT NULL,
   `Student_ID` int(11) NOT NULL,
   `Student_Presence` int(11) NOT NULL,
-  `Notice` int(11) NOT NULL,
   `Staff_Presence` int(11) NOT NULL,
   `Reschedule` int(11) NOT NULL,
-  `Feedback` text NOT NULL,
   `Remarks` text NOT NULL,
   PRIMARY KEY (`Attendance_ID`),
   KEY `fk_attendstudent` (`Student_ID`),
   KEY `fk_attendlesson` (`Lesson_ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `attendance`
 --
 
-INSERT INTO `attendance` (`Attendance_ID`, `Lesson_ID`, `Student_ID`, `Student_Presence`, `Notice`, `Staff_Presence`, `Reschedule`, `Feedback`, `Remarks`) VALUES
-(1, 3, 3, 0, 0, 0, 0, '', ''),
-(2, 3, 2, 0, 0, 0, 0, '', ''),
-(3, 1, 2, 0, 0, 1, 0, '', ''),
-(4, 1, 3, 0, 0, 0, 0, '', '');
+INSERT INTO `attendance` (`Attendance_ID`, `Lesson_ID`, `Student_ID`, `Student_Presence`, `Staff_Presence`, `Reschedule`, `Remarks`) VALUES
+(1, 3, 3, 1, 1, 0, ''),
+(2, 3, 2, 1, 1, 0, ''),
+(3, 1, 2, 0, 1, 0, ''),
+(4, 1, 3, 1, 1, 0, ''),
+(5, 2, 3, 1, 1, 0, ''),
+(6, 5, 7, 0, 1, 0, ''),
+(7, 5, 5, 1, 1, 0, '');
 
 -- --------------------------------------------------------
 
@@ -58,7 +60,6 @@ INSERT INTO `attendance` (`Attendance_ID`, `Lesson_ID`, `Student_ID`, `Student_P
 -- Table structure for table `authassignment`
 --
 
-DROP TABLE IF EXISTS `authassignment`;
 CREATE TABLE IF NOT EXISTS `authassignment` (
   `itemname` varchar(64) NOT NULL,
   `userid` varchar(64) NOT NULL,
@@ -79,8 +80,10 @@ INSERT INTO `authassignment` (`itemname`, `userid`, `bizrule`, `data`) VALUES
 ('member', '22', NULL, 'N;'),
 ('member', '23', NULL, 'N;'),
 ('member', '24', NULL, 'N;'),
+('member', '28', NULL, 'N;'),
 ('member', '6', NULL, 'N;'),
 ('member', '7', NULL, 'N;'),
+('special staff', '27', NULL, 'N;'),
 ('staff', '25', NULL, 'N;'),
 ('staff', '26', NULL, 'N;'),
 ('superadmin', '5', NULL, 'N;');
@@ -91,7 +94,6 @@ INSERT INTO `authassignment` (`itemname`, `userid`, `bizrule`, `data`) VALUES
 -- Table structure for table `authitem`
 --
 
-DROP TABLE IF EXISTS `authitem`;
 CREATE TABLE IF NOT EXISTS `authitem` (
   `name` varchar(64) NOT NULL,
   `type` int(11) NOT NULL,
@@ -111,6 +113,7 @@ INSERT INTO `authitem` (`name`, `type`, `description`, `bizrule`, `data`) VALUES
 ('ManageLesson', 0, 'Lesson Management', NULL, 'N;'),
 ('manageUser', 0, 'User Management', NULL, 'N;'),
 ('member', 2, 'standard member user', '', 'N;'),
+('special staff', 2, 'staff user no attendance', NULL, 'N;'),
 ('staff', 2, 'staff user', NULL, 'N;'),
 ('superadmin', 2, 'Main Admin user account', NULL, 'N;'),
 ('updateOwnPasswords', 1, 'update own password', 'return Yii::app()->user->id==$params["post"]->authID;', 'N;');
@@ -121,7 +124,6 @@ INSERT INTO `authitem` (`name`, `type`, `description`, `bizrule`, `data`) VALUES
 -- Table structure for table `authitemchild`
 --
 
-DROP TABLE IF EXISTS `authitemchild`;
 CREATE TABLE IF NOT EXISTS `authitemchild` (
   `parent` varchar(64) NOT NULL,
   `child` varchar(64) NOT NULL,
@@ -144,41 +146,9 @@ INSERT INTO `authitemchild` (`parent`, `child`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `child`
---
-
-DROP TABLE IF EXISTS `child`;
-CREATE TABLE IF NOT EXISTS `child` (
-  `PC_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `Member_ID` int(11) NOT NULL,
-  `Child_ID` int(11) NOT NULL,
-  `First_Name` text NOT NULL,
-  `Last_Name` text NOT NULL,
-  PRIMARY KEY (`PC_ID`),
-  KEY `fk_child` (`Member_ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
-
---
--- Dumping data for table `child`
---
-
-INSERT INTO `child` (`PC_ID`, `Member_ID`, `Child_ID`, `First_Name`, `Last_Name`) VALUES
-(1, 6, 1, 'Ying Jie', 'Soh'),
-(2, 6, 2, 'Crystal', 'Soh'),
-(3, 7, 1, 'Alvis', 'Ang'),
-(4, 7, 2, 'Darren', 'Ang'),
-(5, 22, 1, 'Chee Seong', 'Tan'),
-(6, 6, 3, 'Lina', 'Soh'),
-(7, 24, 1, 'Rupert', 'Tan'),
-(8, 24, 2, 'Justin', 'Tan');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `course`
 --
 
-DROP TABLE IF EXISTS `course`;
 CREATE TABLE IF NOT EXISTS `course` (
   `Course_ID` int(11) NOT NULL AUTO_INCREMENT,
   `Course_Name` text NOT NULL,
@@ -207,7 +177,6 @@ INSERT INTO `course` (`Course_ID`, `Course_Name`, `Course_Type`, `Course_Descrip
 -- Table structure for table `course_type`
 --
 
-DROP TABLE IF EXISTS `course_type`;
 CREATE TABLE IF NOT EXISTS `course_type` (
   `Type_ID` int(11) NOT NULL AUTO_INCREMENT,
   `Course_Type` text NOT NULL,
@@ -229,10 +198,31 @@ INSERT INTO `course_type` (`Type_ID`, `Course_Type`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `feedback`
+--
+
+CREATE TABLE IF NOT EXISTS `feedback` (
+  `Feedback_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Attendance_ID` int(11) NOT NULL,
+  `Feedback` text NOT NULL,
+  PRIMARY KEY (`Feedback_ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `feedback`
+--
+
+INSERT INTO `feedback` (`Feedback_ID`, `Attendance_ID`, `Feedback`) VALUES
+(1, 3, 'Trial'),
+(2, 6, 'Did very well'),
+(3, 5, 'She did her best');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `login`
 --
 
-DROP TABLE IF EXISTS `login`;
 CREATE TABLE IF NOT EXISTS `login` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(20) NOT NULL,
@@ -240,7 +230,7 @@ CREATE TABLE IF NOT EXISTS `login` (
   `role` int(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_roleid` (`role`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='Checking of Role and Login' AUTO_INCREMENT=27 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='Checking of Role and Login' AUTO_INCREMENT=29 ;
 
 --
 -- Dumping data for table `login`
@@ -251,10 +241,12 @@ INSERT INTO `login` (`id`, `username`, `password`, `role`) VALUES
 (6, 'member01', 'abrBPGLQbAtJQ', 2),
 (7, 'member02', 'abwkQLXT5/zZg', 2),
 (22, 'member09', 'abW141.PWf/FE', 2),
-(23, 'member10', 'abW141.PWf/FE', 2),
+(23, 'member10', 'member10', 2),
 (24, 'member11', 'aboi45SI0s85Q', 2),
 (25, 'staff01', 'abKNfOz/K2ng6', 3),
-(26, 'staff02', 'ab4O8XznTfWNA', 3);
+(26, 'staff02', 'ab4O8XznTfWNA', 3),
+(27, 'special01', 'abu7TrpZn2I1A', 4),
+(28, 'member06', 'abd4C01NhQmTY', 2);
 
 -- --------------------------------------------------------
 
@@ -262,7 +254,6 @@ INSERT INTO `login` (`id`, `username`, `password`, `role`) VALUES
 -- Table structure for table `newsletter`
 --
 
-DROP TABLE IF EXISTS `newsletter`;
 CREATE TABLE IF NOT EXISTS `newsletter` (
   `Img_ID` int(11) NOT NULL AUTO_INCREMENT,
   `Img_Name` varchar(255) NOT NULL,
@@ -285,10 +276,26 @@ INSERT INTO `newsletter` (`Img_ID`, `Img_Name`, `Image`, `Date_Updated`, `Date_U
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `payroll`
+--
+
+CREATE TABLE IF NOT EXISTS `payroll` (
+  `P_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Staff_ID` int(11) NOT NULL,
+  `PayperLesson` int(11) NOT NULL,
+  `LessonCount` int(11) NOT NULL,
+  `Duration` int(11) NOT NULL,
+  `LessonType` int(11) NOT NULL,
+  `Datetime_Generate` datetime NOT NULL,
+  PRIMARY KEY (`P_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `price`
 --
 
-DROP TABLE IF EXISTS `price`;
 CREATE TABLE IF NOT EXISTS `price` (
   `course_id` varchar(20) NOT NULL,
   `weekday_price` int(11) NOT NULL,
@@ -298,16 +305,36 @@ CREATE TABLE IF NOT EXISTS `price` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `qualification`
+--
+
+CREATE TABLE IF NOT EXISTS `qualification` (
+  `Qualification_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Qualification` varchar(1000) NOT NULL,
+  PRIMARY KEY (`Qualification_ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `qualification`
+--
+
+INSERT INTO `qualification` (`Qualification_ID`, `Qualification`) VALUES
+(1, '''A'' Level'),
+(2, 'Degree'),
+(3, 'Diploma');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `registration`
 --
 
-DROP TABLE IF EXISTS `registration`;
 CREATE TABLE IF NOT EXISTS `registration` (
   `R_ID` int(11) NOT NULL AUTO_INCREMENT,
   `Student_ID` int(11) NOT NULL,
   `Course_ID` int(11) NOT NULL,
   PRIMARY KEY (`R_ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `registration`
@@ -315,7 +342,9 @@ CREATE TABLE IF NOT EXISTS `registration` (
 
 INSERT INTO `registration` (`R_ID`, `Student_ID`, `Course_ID`) VALUES
 (1, 2, 1),
-(2, 3, 1);
+(2, 3, 1),
+(3, 7, 3),
+(4, 5, 3);
 
 -- --------------------------------------------------------
 
@@ -323,7 +352,6 @@ INSERT INTO `registration` (`R_ID`, `Student_ID`, `Course_ID`) VALUES
 -- Table structure for table `roles`
 --
 
-DROP TABLE IF EXISTS `roles`;
 CREATE TABLE IF NOT EXISTS `roles` (
   `id` int(11) NOT NULL,
   `description` varchar(30) NOT NULL,
@@ -346,26 +374,27 @@ INSERT INTO `roles` (`id`, `description`) VALUES
 -- Table structure for table `student`
 --
 
-DROP TABLE IF EXISTS `student`;
 CREATE TABLE IF NOT EXISTS `student` (
   `Student_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `Member_ID` int(11) NOT NULL,
-  `Child_ID` int(11) NOT NULL,
+  `User_ID` int(11) NOT NULL,
   PRIMARY KEY (`Student_ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `student`
 --
 
-INSERT INTO `student` (`Student_ID`, `Member_ID`, `Child_ID`) VALUES
-(1, 23, 0),
-(2, 6, 1),
-(3, 6, 2),
-(4, 6, 3),
-(5, 22, 0),
-(6, 22, 1),
-(7, 24, 1);
+INSERT INTO `student` (`Student_ID`, `User_ID`) VALUES
+(1, 5),
+(2, 10),
+(3, 11),
+(4, 19),
+(5, 15),
+(6, 12),
+(7, 17),
+(8, 18),
+(9, 13),
+(10, 14);
 
 -- --------------------------------------------------------
 
@@ -373,7 +402,6 @@ INSERT INTO `student` (`Student_ID`, `Member_ID`, `Child_ID`) VALUES
 -- Table structure for table `studio`
 --
 
-DROP TABLE IF EXISTS `studio`;
 CREATE TABLE IF NOT EXISTS `studio` (
   `Studio_ID` int(11) NOT NULL AUTO_INCREMENT,
   `Capacity` int(11) NOT NULL,
@@ -396,26 +424,26 @@ INSERT INTO `studio` (`Studio_ID`, `Capacity`, `Studio_Name`) VALUES
 -- Table structure for table `teaching`
 --
 
-DROP TABLE IF EXISTS `teaching`;
 CREATE TABLE IF NOT EXISTS `teaching` (
   `T_ID` int(11) NOT NULL AUTO_INCREMENT,
   `Staff_ID` int(11) NOT NULL,
-  `Course_Type` int(11) NOT NULL,
+  `Course_ID` int(11) NOT NULL,
   PRIMARY KEY (`T_ID`),
   KEY `fk_staff` (`Staff_ID`),
-  KEY `fk_coursetype` (`Course_Type`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+  KEY `Course_ID` (`Course_ID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `teaching`
 --
 
-INSERT INTO `teaching` (`T_ID`, `Staff_ID`, `Course_Type`) VALUES
+INSERT INTO `teaching` (`T_ID`, `Staff_ID`, `Course_ID`) VALUES
 (1, 25, 1),
 (2, 26, 1),
 (3, 25, 4),
 (4, 26, 3),
-(5, 25, 2);
+(5, 25, 2),
+(6, 25, 6);
 
 -- --------------------------------------------------------
 
@@ -423,7 +451,6 @@ INSERT INTO `teaching` (`T_ID`, `Staff_ID`, `Course_Type`) VALUES
 -- Table structure for table `timetable`
 --
 
-DROP TABLE IF EXISTS `timetable`;
 CREATE TABLE IF NOT EXISTS `timetable` (
   `Lesson_ID` int(11) NOT NULL AUTO_INCREMENT,
   `Staff_ID` int(11) NOT NULL,
@@ -436,17 +463,18 @@ CREATE TABLE IF NOT EXISTS `timetable` (
   KEY `fk_timetablestudio` (`Venue`),
   KEY `fk_timetablecourse` (`Course_ID`),
   KEY `fk_timetablelogin` (`Staff_ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `timetable`
 --
 
 INSERT INTO `timetable` (`Lesson_ID`, `Staff_ID`, `Course_ID`, `Venue`, `Duration`, `Date_Scheduled`, `Time_Scheduled`) VALUES
-(1, 25, 1, 1, 1, '2014-07-14', '11:50:00'),
-(2, 25, 1, 2, 2, '2014-07-26', '13:50:00'),
-(3, 25, 1, 3, 1, '2014-07-14', '11:50:00'),
-(4, 25, 1, 2, 1, '2014-07-09', '11:50:00');
+(1, 25, 1, 1, 60, '2014-07-15', '11:50:00'),
+(2, 25, 1, 2, 60, '2014-07-22', '13:50:00'),
+(3, 25, 1, 3, 1, '2014-07-15', '11:50:00'),
+(4, 25, 1, 2, 1, '2014-07-09', '11:50:00'),
+(5, 26, 3, 1, 60, '2014-07-30', '11:50:00');
 
 -- --------------------------------------------------------
 
@@ -454,33 +482,47 @@ INSERT INTO `timetable` (`Lesson_ID`, `Staff_ID`, `Course_ID`, `Venue`, `Duratio
 -- Table structure for table `user_data`
 --
 
-DROP TABLE IF EXISTS `user_data`;
 CREATE TABLE IF NOT EXISTS `user_data` (
-  `User_ID` int(11) NOT NULL,
-  `First_Name` text NOT NULL,
-  `Last_Name` text NOT NULL,
-  `MobileNo` int(10) NOT NULL,
-  `TelNo` int(10) NOT NULL,
+  `Record_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `User_ID` int(11) DEFAULT NULL,
+  `Name` text NOT NULL,
+  `Nationality` text NOT NULL,
+  `MobileNo` int(11) DEFAULT NULL,
+  `TelNo` int(11) NOT NULL,
   `Email` varchar(99) NOT NULL,
-  `Address1` varchar(99) NOT NULL,
-  `Address2` varchar(99) NOT NULL,
-  `Address3` varchar(99) NOT NULL,
-  PRIMARY KEY (`User_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Member Particulars';
+  `Address` varchar(1000) NOT NULL,
+  `Parent` int(11) DEFAULT NULL,
+  `Qualification` int(11) DEFAULT NULL,
+  PRIMARY KEY (`Record_ID`),
+  KEY `fk_usermember` (`User_ID`),
+  KEY `fk_parentchild` (`Parent`),
+  KEY `fk_staffquali` (`Qualification`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 --
 -- Dumping data for table `user_data`
 --
 
-INSERT INTO `user_data` (`User_ID`, `First_Name`, `Last_Name`, `MobileNo`, `TelNo`, `Email`, `Address1`, `Address2`, `Address3`) VALUES
-(5, 'Jeryl', 'Teo', 9696, 6877, 'ffantasy@hotmail.com', '', '', ''),
-(6, 'Jun Wei', 'Soh', 12345, 123456, '234124@gmail.com', 'Blk 425', 'Ave5', '#06-1678'),
-(7, 'Clement', 'Ang', 123897, 9821743, 'adjfoij@hotmail.com', 'blk345', 'Ave 4', '#09-234'),
-(22, 'Wei Kian', 'Tan', 98989, 123123, 'weikian@hotmail.com', 'blk879', 'Ave 34', '#09'),
-(23, 'Wally', 'Goh', 123, 123423, 'ffnt@hotmail.com', 'Choa Chu kang', 'ave 5', '#09-178'),
-(24, 'Alvis', 'Lim', 96968, 23424, 'Falci@hotmail.com', 'blk97', 'Ave 56', '#091'),
-(25, 'Hui Xian', 'Lim', 34578, 23457, 'les@gmail.com', 'Block 234', 'Ave 5', '#09-888'),
-(26, 'Shan Qin', 'Sim', 1345345, 2147483647, 'fagag@hotmail.com', 'Blk12938', 'Ave203490', '#092-1238');
+INSERT INTO `user_data` (`Record_ID`, `User_ID`, `Name`, `Nationality`, `MobileNo`, `TelNo`, `Email`, `Address`, `Parent`, `Qualification`) VALUES
+(1, 5, 'Jeryl Teo', 'Singaporean', 96968095, 68772501, 'ffantasyviiclouds@hotmail.com', 'Choa Chu Kang Ave 4 Blk 425 #09-178', NULL, 3),
+(2, 6, 'Jun Wei Soh', 'Singaporean', 12345, 123456, '234124@gmail.com', 'Blk 425 Ave5 #06-1678', NULL, NULL),
+(3, 7, 'Clement Ang', 'Singaporean', 123897, 9821743, 'adjfoij@hotmail.com', 'blk345 Ave 4 #09-234', NULL, NULL),
+(4, 22, 'Wei Kian Tan', 'Singaporean', 98989, 123123, 'weikian@hotmail.com', 'blk879 Ave 34 #09', NULL, NULL),
+(5, 23, 'Wally Goh', 'Malaysian', 123, 123423, 'ffnt@hotmail.com', 'Choa Chu kang ave 5 #09-178', NULL, NULL),
+(6, 24, 'Alvis Lim', 'Singaporean', 96968, 23434, 'Falci@hotmail.com', 'blk97 Ave 56 #091', NULL, NULL),
+(7, 25, 'Hui Xian Lim', 'Singaporean', 34578, 23457, 'les@gmail.com', 'Block 234 Ave', NULL, 2),
+(8, 26, 'Shan Qin Sim', 'Singaporean', 1345345, 2147483647, 'fagag@hotmail.com', 'Blk12938 Ave203490 #092-1238', NULL, 3),
+(9, 27, 'Jeron Teo', 'Singaporean', 123434, 1234234, 'j2@email.com', 'Chia Chu kang Blk 435 #09-123', NULL, 2),
+(10, NULL, 'Ying Jie Soh', 'Singaporean', 929212, 123456, 'YJS@hotmail.com', 'Blk 425 Ave5 #06-1678', 6, NULL),
+(11, NULL, 'Crystal Soh', 'Singaporean', NULL, 123456, 'crys@email.com', 'Blk 425 Ave5 #06-1678', 6, NULL),
+(12, 28, 'Jet Enduro', 'Singaporean', 1343245, 23452345, 'wilds@hotmail.com', 'Block 234 Ave', NULL, NULL),
+(13, NULL, 'Alvis Ang', 'Singaporean', NULL, 9821743, 'aa@gmail.com', 'blk345 Ave 4 #09-234', 7, NULL),
+(14, NULL, 'Darren Ang', 'Singaporean', NULL, 9821743, '', 'blk345 Ave 4 #09-234', 7, NULL),
+(15, NULL, 'Chee Seong Tan', 'Singaporean', NULL, 123123, '', 'blk879 Ave 34 #09', 22, NULL),
+(16, NULL, 'Lina Soh', 'Singaporean', NULL, 123456, '', 'Blk 425 Ave5 #06-1678', 6, NULL),
+(17, NULL, 'Rupert Lim', 'Singaporean', NULL, 23434, '', 'blk97 Ave 56 #091', 24, NULL),
+(18, NULL, 'Justin Lim', 'Singaporean', NULL, 23434, '', 'blk97 Ave 56 #091', 24, NULL),
+(19, NULL, 'Jerome Lim', 'Singaporean', NULL, 23434, '', 'blk97 Ave 56 #091', 24, NULL);
 
 --
 -- Constraints for dumped tables
@@ -507,12 +549,6 @@ ALTER TABLE `authitemchild`
   ADD CONSTRAINT `authitemchild_ibfk_2` FOREIGN KEY (`child`) REFERENCES `authitem` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `child`
---
-ALTER TABLE `child`
-  ADD CONSTRAINT `fk_child` FOREIGN KEY (`Member_ID`) REFERENCES `login` (`id`);
-
---
 -- Constraints for table `course`
 --
 ALTER TABLE `course`
@@ -528,7 +564,7 @@ ALTER TABLE `login`
 -- Constraints for table `teaching`
 --
 ALTER TABLE `teaching`
-  ADD CONSTRAINT `fk_coursetype` FOREIGN KEY (`Course_Type`) REFERENCES `course_type` (`Type_ID`),
+  ADD CONSTRAINT `teaching_ibfk_1` FOREIGN KEY (`Course_ID`) REFERENCES `course` (`Course_ID`),
   ADD CONSTRAINT `fk_staff` FOREIGN KEY (`Staff_ID`) REFERENCES `login` (`id`);
 
 --
@@ -543,7 +579,9 @@ ALTER TABLE `timetable`
 -- Constraints for table `user_data`
 --
 ALTER TABLE `user_data`
-  ADD CONSTRAINT `fk_logmember` FOREIGN KEY (`User_ID`) REFERENCES `login` (`id`);
+  ADD CONSTRAINT `fk_parentchild` FOREIGN KEY (`Parent`) REFERENCES `user_data` (`User_ID`),
+  ADD CONSTRAINT `fk_staffquali` FOREIGN KEY (`Qualification`) REFERENCES `qualification` (`Qualification_ID`),
+  ADD CONSTRAINT `fk_usermember` FOREIGN KEY (`User_ID`) REFERENCES `login` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
